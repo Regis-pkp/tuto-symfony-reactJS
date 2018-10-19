@@ -16,32 +16,32 @@ class ProductController extends AbstractController
     protected $statusCode = 200;
 
     /**
-      * @var EntityManagerInterface
-      */
+     *   * @var EntityManagerInterface
+     *   */
     private $entityManager;
 
     /**
-      * @var \App\Repository\ProductRepository|\Doctrine\Common\Persistence\ObjectRepository
-      */
+     *   * @var \App\Repository\ProductRepository|\Doctrine\Common\Persistence\ObjectRepository
+     *   */
     private $productRepository;
 
     /**
-      * @var ImageUploader
-      */
-    private $imageUploader;
+     *   * @var ImageUploader
+     *   */
+ 
+    private $imageUploader;
 
     /**
-      * ProductController constructor.
-      * @param EntityManagerInterface $entityManager
-      * @param ImageUploader $imageUploader
-      */
+     *   * ProductController constructor.
+     *   * @param EntityManagerInterface $entityManager
+     *   * @param ImageUploader $imageUploader
+     *   */
     public function __construct(EntityManagerInterface $entityManager, ImageUploader $imageUploader)
     {
         $this->entityManager = $entityManager;
         $this->productRepository = $entityManager->getRepository('App:Product');
         $this->imageUploader = $imageUploader;
     }
-
 
 
     /**
@@ -51,7 +51,6 @@ class ProductController extends AbstractController
     {
         return $this->render('product/index.html.twig');
     }
-
 
 
     /**
@@ -76,7 +75,7 @@ class ProductController extends AbstractController
     public function increaseFavoriteCount($id)
     {
         $product = $this->productRepository->find($id);
-        if (! $product) {
+        if (!$product) {
             return new JsonResponse("Not found!", 404);
         }
         $product->setFavoriteCount($product->getFavoriteCount() + 1);
@@ -100,7 +99,8 @@ class ProductController extends AbstractController
      * @param $data
      * @return JsonResponse
      */
-    function response($data) {
+    function response($data)
+    {
 
         return new JsonResponse($data, $this->statusCode);
     }
@@ -109,7 +109,8 @@ class ProductController extends AbstractController
      * @param $errors
      * @return JsonResponse
      */
-    function responseWithError($errors) {
+    function responseWithError($errors)
+    {
         $errorMsg = [
             'errors' => $errors
         ];
@@ -143,7 +144,9 @@ class ProductController extends AbstractController
      * Persist and flush
      * @param $object
      */
-    function updateDatabase($object) {
+    function updateDatabase($object)
+    {
         $this->entityManager->persist($object);
         $this->entityManager->flush();
+    }
 }
